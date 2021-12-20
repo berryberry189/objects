@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Phone {
+public class Phone extends AbstractPhone{
     // 단위 요금
     private Money amount;
     // 단위 시간
@@ -35,12 +35,9 @@ public class Phone {
         return seconds;
     }
 
-    public Money calculateFee() {
-        Money result = Money.ZERO;
-        for (Call call : calls) {
-            result = result.plus(amount.times(call.getDuration().getSeconds() / seconds.getSeconds()));
-        }
-        return result;
+    @Override
+    protected Money calculateCallFee(Call call) {
+        return amount.times(call.getDuration().getSeconds() / seconds.getSeconds());
     }
 
 }

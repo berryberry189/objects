@@ -3,50 +3,32 @@ package com.book.objects.chap10;
 import com.book.objects.chap5.Money;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 // 심야 할인 요금제
-public class NightlyDiscountPhone {
+public class NightlyDiscountPhone extends Phone{
     private static final int LATE_NIGHT_HOUR = 22;
 
     // 심야 할인 요금
     private final Money nightlyAmount;
-    // 일반 요금
-    private final Money regularAmount;
-    // 단위 시간(초)
-    private final Duration seconds;
-    // 통화 목록
-    private final List<Call> calls = new ArrayList<>();
 
     public NightlyDiscountPhone(Money nightlyAmount, Money regularAmount, Duration seconds) {
+        super(regularAmount, seconds);
         this.nightlyAmount = nightlyAmount;
-        this.regularAmount = regularAmount;
-        this.seconds = seconds;
-    }
-
-    public void call(Call call) {
-        calls.add(call);
-    }
-
-    public List<Call> getCalls() {
-        return calls;
     }
 
     //심야 요금을 고려한 통화 요금 계산
     public Money calculateFee() {
-        Money result = Money.ZERO;
+        // 부모 클래스의 calculateFee 호출
+        Money result = super.calculateFee();
 
-        for (Call call : calls) {
+        Money nightlyFee = Money.ZERO;
+        for (Call call : getCalls()) {
             if (call.getFrom().getHour() >= LATE_NIGHT_HOUR) {
-                result = result.plus(
-                        nightlyAmount.times(call.getDuration().getSeconds() / seconds.getSeconds()));
-            }else {
-                result = result.plus(
-                        regularAmount.times(call.getDuration().getSeconds() / seconds.getSeconds()));
+                nightlyFee = nightlyFee.plus(
+                        getAmount().times(call.getDuration().getSeconds() / getSeconds().getSeconds()));
             }
         }
 
-        return result;
+        return result.minus(nightlyFee);
     }
 }

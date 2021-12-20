@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // 심야 할인 요금제
-public class NightlyDiscountPhone extends AbstractPhone{
+public class NightlyDiscountPhone extends Phone {
     private static final int LATE_NIGHT_HOUR = 22;
 
     // 심야 할인 요금

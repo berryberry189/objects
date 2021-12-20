@@ -15,6 +15,13 @@ public class RegularPhone extends Phone {
     private List<Call> calls = new ArrayList<>();
 
     public RegularPhone(Money amount, Duration seconds) {
+        super(0);
+        this.amount = amount;
+        this.seconds = seconds;
+    }
+
+    public RegularPhone(Money amount, Duration seconds, double taxRate) {
+        super(taxRate);
         this.amount = amount;
         this.seconds = seconds;
     }

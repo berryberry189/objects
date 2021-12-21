@@ -3,20 +3,27 @@ package com.book.objects.chap11;
 import com.book.objects.chap5.Money;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public abstract class Phone {
+public class Phone {
 
+    private RatePolicy ratePolicy;
+
+    // 전체 통화 목록
     private List<Call> calls = new ArrayList<>();
 
-    public Money calculateFee() {
-        Money result = Money.ZERO;
-        for (Call call : calls) {
-            result = result.plus(calculateCallFee(call));
-        }
-        return result;
+    public Phone(RatePolicy ratePolicy) {
+        this.ratePolicy = ratePolicy;
     }
 
-    abstract protected Money calculateCallFee(Call call);
-    abstract protected Money afterCalculated(Money fee);
+    public List<Call> getCalls() {
+                // 테이터 삭제, 추가를 막음
+        return Collections.unmodifiableList(calls);
+    }
+
+    public Money calculateFee(){
+        return ratePolicy.calculateFee(this);
+    }
+
 }

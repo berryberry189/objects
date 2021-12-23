@@ -1,0 +1,43 @@
+package com.book.objects.chap12;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Lecture {
+
+    // 이수 여부를 판단할 점수 (학생성적이 pass보다 크면 이수한것으로 판단)
+    private int pass;
+    // 과목명
+    private String title;
+    // 학생들의 성적
+    private List<Integer> scores = new ArrayList<>();
+
+    public Lecture(String title, int pass, List<Integer> scores) {
+        this.title = title;
+        this.pass = pass;
+        this.scores = scores;
+    }
+
+    public double average(){
+        return  scores.stream()
+                .mapToInt(Integer::intValue)
+                .average().orElse(0);
+    }
+
+    public List<Integer> getScores(){
+        return Collections.unmodifiableList(scores);
+    }
+
+    public String evaluate(){
+        return String.format("Pass:%d Fail:%d", passCount(), failCount());
+    }
+
+    private long passCount() {
+        return scores.stream().filter(score -> score >= pass).count();
+    }
+
+    private long failCount() {
+        return scores.size() - passCount();
+    }
+}

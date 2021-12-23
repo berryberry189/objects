@@ -8,7 +8,7 @@ public class Grade {
     // 최소 성적, 최대 성적
     private int upper, lower;
 
-    private Grade(String name, int upper, int lower){
+    public Grade(String name, int upper, int lower){
         this.name = name;
         this.upper = upper;
         this.lower = lower;

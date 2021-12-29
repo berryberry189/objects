@@ -1,5 +1,6 @@
 package com.book.objects.chap12;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -24,10 +25,10 @@ class ProfessorTest {
             String result = getProfessor().compileStatistics();
             assertEquals(result, "[다익스트라] Pass:3 Fail:2 - Avg: 69.2");
         }
-
     }
 
     @Nested
+    @DisplayName("업캐스팅")
     class professorGradeLectureTest{
 
         Professor getProfessor() {
@@ -47,6 +48,5 @@ class ProfessorTest {
             String result = getProfessor().compileStatistics();
             assertEquals(result, "[다익스트라] Pass:3 Fail:2, A:1 B:1 C:1 D:1 F:1 - Avg: 69.2");
         }
-
     }
 }
